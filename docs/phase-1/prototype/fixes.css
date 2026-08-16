@@ -1,0 +1,30 @@
+.release-card > div {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.hero > * {
+  min-width: 0;
+}
+
+.hero-visual {
+  width: 100%;
+}
+
+@media (max-width: 580px) {
+  .hero-copy p {
+    overflow-wrap: anywhere;
+  }
+
+  .prototype-bar nav {
+    overflow-x: auto;
+  }
+
+  .prototype-link {
+    white-space: nowrap;
+  }
+}

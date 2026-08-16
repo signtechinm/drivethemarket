@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drive the Market — Phase 1 Prototype</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="fixes.css">
+</head>
+<body>
+  <div class="prototype-bar">
+    <div><strong>Drive the Market</strong><span>Phase 1 clickable prototype</span></div>
+    <nav aria-label="Prototype experiences">
+      <button class="prototype-link active" data-screen="public">Public</button>
+      <button class="prototype-link" data-screen="admin">Admin</button>
+      <button class="prototype-link" data-screen="release">Release flow</button>
+      <button class="prototype-link" data-screen="student">Student</button>
+    </nav>
+  </div>
+
+  <main>
+    <section class="screen active" id="public" aria-labelledby="public-title">
+      <header class="public-header">
+        <button class="logo-button" data-screen="public" aria-label="Drive the Market home">
+          <img src="../../../assets/trade-tuter-logo-concept.png" alt="Drive the Market">
+        </button>
+        <nav class="desktop-nav" aria-label="Public navigation">
+          <a href="#courses">Courses</a><a href="#batches">Upcoming batches</a><a href="#approach">How it works</a><a href="#contact">Contact</a>
+        </nav>
+        <div class="header-actions"><button class="btn ghost" data-screen="student">Student login</button><button class="btn primary" data-action="enquire">Enquire now</button></div>
+      </header>
+
+      <div class="public-page">
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Structured trading education</span>
+            <h1>Learn the market.<br><em>Master the process.</em></h1>
+            <p>Live instruction supported by organized notes, protected recordings, and a clear learning path after every class.</p>
+            <div class="hero-actions"><button class="btn primary large" data-action="courses">Explore courses</button><button class="btn silver large" data-action="enquire">Talk to an advisor</button></div>
+            <div class="trust-row"><span>✓ Guided syllabus</span><span>✓ Expert-led classes</span><span>✓ Progress tracking</span></div>
+          </div>
+          <div class="hero-visual" aria-label="Drive the Market learning preview">
+            <div class="market-line"></div>
+            <div class="floating-card class-card"><small>Next live class</small><strong>Support &amp; Resistance</strong><span>Saturday · 7:00 PM</span></div>
+            <div class="floating-card progress-card"><small>Course progress</small><strong>68%</strong><div class="progress"><i style="width:68%"></i></div></div>
+            <div class="floating-card release-card"><span class="round-icon">✓</span><div><small>Just released</small><strong>Class 05 recording</strong></div></div>
+          </div>
+        </section>
+
+        <section class="section-block" id="courses">
+          <div class="section-heading"><div><span class="eyebrow">Programs</span><h2>Build skill in the right order</h2></div><button class="text-button" data-action="courses">View all courses →</button></div>
+          <div class="course-grid">
+            <article class="course-card featured"><span class="course-level">Foundation</span><h3>Trading Essentials</h3><p>Market structure, risk awareness, charts, orders, and a disciplined trading foundation.</p><footer><span>12 classes</span><button data-action="course-detail">View program →</button></footer></article>
+            <article class="course-card"><span class="course-level">Intermediate</span><h3>Technical Analysis</h3><p>Price action, patterns, indicators, support, resistance, and trade planning.</p><footer><span>16 classes</span><button data-action="course-detail">View program →</button></footer></article>
+            <article class="course-card"><span class="course-level">Advanced</span><h3>Options Strategy</h3><p>Options foundations, strategy selection, position construction, and risk control.</p><footer><span>14 classes</span><button data-action="course-detail">View program →</button></footer></article>
+          </div>
+        </section>
+
+        <section class="steps-section" id="approach">
+          <span class="eyebrow">The Drive the Market method</span><h2>Live class. Structured follow-through.</h2>
+          <div class="steps"><div><b>01</b><h3>Attend live</h3><p>Learn directly with your instructor on the scheduled class platform.</p></div><div><b>02</b><h3>Review after class</h3><p>Approved notes and recordings unlock only after the session is completed.</p></div><div><b>03</b><h3>Track progress</h3><p>Continue videos, complete materials, and follow your syllabus in sequence.</p></div></div>
+        </section>
+
+        <section class="cta" id="contact"><div><span class="eyebrow light">Start the conversation</span><h2>Find the right learning path.</h2><p>Tell us what you want to learn and our academic team will guide you.</p></div><button class="btn silver large" data-action="enquire">Send an enquiry</button></section>
+      </div>
+    </section>
+
+    <section class="screen app-screen" id="admin" aria-labelledby="admin-title">
+      <aside class="sidebar">
+        <div class="sidebar-logo"><img src="../../../assets/trade-tuter-logo-concept.png" alt="Drive the Market"></div>
+        <nav aria-label="Admin navigation">
+          <button class="side-link active" data-view="admin-overview"><span>⌂</span>Overview</button>
+          <button class="side-link"><span>♙</span>Students</button>
+          <button class="side-link" data-view="batch-list"><span>▦</span>Batches</button>
+          <button class="side-link"><span>▤</span>Courses</button>
+          <button class="side-link" data-view="planner"><span>☷</span>Syllabus planner</button>
+          <button class="side-link"><span>□</span>Class schedule</button>
+          <button class="side-link" data-screen="release"><span>⇧</span>Materials</button>
+          <button class="side-link"><span>◔</span>Progress &amp; reports</button>
+          <button class="side-link"><span>✎</span>Website content</button>
+        </nav>
+        <div class="sidebar-bottom"><button class="side-link"><span>⚙</span>Settings</button><div class="user-mini"><div class="avatar">AM</div><div><strong>Amina Mathew</strong><span>Academic Manager</span></div></div></div>
+      </aside>
+      <div class="app-main">
+        <header class="app-header"><button class="menu-toggle" aria-label="Open navigation">☰</button><div class="search">⌕ <span>Search students, batches, classes…</span><kbd>⌘ K</kbd></div><div class="app-actions"><button class="icon-btn" aria-label="Notifications">♢<i>3</i></button><div class="avatar">AM</div></div></header>
+
+        <div class="admin-view active" id="admin-overview">
+          <div class="page-head"><div><span class="eyebrow">Saturday, 15 August</span><h1 id="admin-title">Good morning, Amina</h1><p>Here is what needs your attention today.</p></div><button class="btn primary" data-action="quick">＋ Quick action</button></div>
+          <div class="metrics"><article><span class="metric-icon">♙</span><div><small>Active students</small><strong>248</strong><em>+18 this month</em></div></article><article><span class="metric-icon">▦</span><div><small>Active batches</small><strong>8</strong><em>3 enrolling</em></div></article><article><span class="metric-icon">□</span><div><small>Classes today</small><strong>5</strong><em>Next at 4:00 PM</em></div></article><article class="attention"><span class="metric-icon">⇧</span><div><small>Pending releases</small><strong>3</strong><em>Needs attention</em></div></article></div>
+          <div class="dashboard-grid">
+            <article class="panel span-2"><div class="panel-head"><div><h2>Today's classes</h2><p>Live sessions scheduled for active batches</p></div><button class="text-button">View calendar →</button></div><div class="schedule-list"><div><time><b>4:00</b><span>PM</span></time><i></i><section><strong>Market Foundations</strong><span>Trading Essentials · TT-26-08-A</span></section><span class="status scheduled">Scheduled</span></div><div><time><b>6:00</b><span>PM</span></time><i></i><section><strong>Indicators &amp; Confirmation</strong><span>Technical Analysis · TA-26-07-B</span></section><span class="status scheduled">Scheduled</span></div><div><time><b>7:30</b><span>PM</span></time><i></i><section><strong>Options Greeks</strong><span>Options Strategy · OS-26-06-A</span></section><span class="status scheduled">Scheduled</span></div></div></article>
+            <article class="panel"><div class="panel-head"><div><h2>Needs attention</h2><p>Actions waiting for you</p></div></div><button class="attention-row" data-screen="release"><span class="attention-icon">⇧</span><div><strong>3 classes awaiting release</strong><small>Materials are approved</small></div><b>→</b></button><button class="attention-row"><span class="attention-icon">✓</span><div><strong>2 classes need completion</strong><small>Marked conducted</small></div><b>→</b></button><button class="attention-row"><span class="attention-icon">!</span><div><strong>5 import rows need review</strong><small>Student upload</small></div><b>→</b></button></article>
+            <article class="panel span-2"><div class="panel-head"><div><h2>Recent enrolments</h2><p>Students added during the last seven days</p></div><button class="text-button">All students →</button></div><div class="mini-table"><div class="table-row head"><span>Student</span><span>Batch</span><span>Enrolled</span><span>Status</span></div><div class="table-row"><span><b>AN</b> Anjali Nair</span><span>TT-26-08-A</span><span>Today</span><span class="status active">Active</span></div><div class="table-row"><span><b>RK</b> Rahul Kumar</span><span>TA-26-07-B</span><span>Yesterday</span><span class="status active">Active</span></div><div class="table-row"><span><b>FS</b> Farah Shaikh</span><span>OS-26-06-A</span><span>14 Aug</span><span class="status pending">Pending</span></div></div></article>
+            <article class="panel progress-panel"><div class="panel-head"><div><h2>Batch engagement</h2><p>Average learning progress</p></div></div><div class="donut" aria-label="74 percent engagement"><span>74%<small>average</small></span></div><p class="muted center">Across 8 active batches</p></article>
+          </div>
+        </div>
+
+        <div class="admin-view" id="batch-list">
+          <div class="page-head"><div><span class="eyebrow">Academic operations</span><h1>Batches</h1><p>Manage course deliveries, schedules, students, and status.</p></div><button class="btn primary" data-action="new-batch">＋ Create batch</button></div>
+          <div class="toolbar"><div class="filter-search">⌕ Search batches</div><button class="filter">All courses⌄</button><button class="filter">Active⌄</button><button class="filter">Start date⌄</button></div>
+          <div class="batch-cards"><article><header><span class="status active">Active</span><button>•••</button></header><h2>Technical Analysis · July B</h2><p>TA-26-07-B · Instructor: David Thomas</p><div class="batch-stats"><span><b>28</b> students</span><span><b>9/16</b> classes</span><span><b>56%</b> progress</span></div><div class="progress"><i style="width:56%"></i></div><footer><span>Ends 28 Sep 2026</span><button data-view="planner">Open batch →</button></footer></article><article><header><span class="status active">Active</span><button>•••</button></header><h2>Trading Essentials · August A</h2><p>TT-26-08-A · Instructor: Amina Mathew</p><div class="batch-stats"><span><b>32</b> students</span><span><b>3/12</b> classes</span><span><b>24%</b> progress</span></div><div class="progress"><i style="width:24%"></i></div><footer><span>Ends 24 Oct 2026</span><button data-view="planner">Open batch →</button></footer></article><article><header><span class="status pending">Enrolling</span><button>•••</button></header><h2>Options Strategy · September A</h2><p>OS-26-09-A · Instructor: Not assigned</p><div class="batch-stats"><span><b>14/30</b> seats</span><span><b>0/14</b> classes</span><span><b>0%</b> progress</span></div><div class="progress"><i style="width:2%"></i></div><footer><span>Starts 05 Sep 2026</span><button data-view="planner">Open batch →</button></footer></article></div>
+        </div>
+
+        <div class="admin-view" id="planner">
+          <div class="page-head compact"><div><button class="back" data-view="batch-list">← Batches</button><h1>Technical Analysis · July B</h1><p>TA-26-07-B · 28 students · Active</p></div><div class="head-actions"><button class="btn ghost">Preview</button><button class="btn primary">Save changes</button></div></div>
+          <div class="tabs"><button>Overview</button><button>Students</button><button class="active">Syllabus</button><button>Schedule</button><button>Materials</button><button>Progress</button></div>
+          <div class="planner-layout"><section class="panel"><div class="panel-head"><div><h2>Batch syllabus</h2><p>16 classes across 4 modules</p></div><button class="btn ghost small">＋ Add module</button></div><div class="module"><button class="module-head"><span>⌄</span><div><small>MODULE 1</small><strong>Market structure and chart foundations</strong></div><em>4 classes · Complete</em></button><div class="class-row"><span class="drag">⠿</span><b>01</b><div><strong>Understanding market structure</strong><small>05 Jul · David Thomas · 3 resources</small></div><span class="status released">Released</span><button>•••</button></div><div class="class-row"><span class="drag">⠿</span><b>02</b><div><strong>Candlesticks and chart reading</strong><small>09 Jul · David Thomas · 4 resources</small></div><span class="status released">Released</span><button>•••</button></div></div><div class="module"><button class="module-head"><span>⌄</span><div><small>MODULE 2</small><strong>Price action and key levels</strong></div><em>5 classes · In progress</em></button><div class="class-row"><span class="drag">⠿</span><b>05</b><div><strong>Support and resistance</strong><small>02 Aug · David Thomas · 3 resources</small></div><span class="status released">Released</span><button>•••</button></div><div class="class-row highlight"><span class="drag">⠿</span><b>06</b><div><strong>Trend, range, and breakout structure</strong><small>09 Aug · David Thomas · 4 resources</small></div><span class="status pending">Awaiting release</span><button data-screen="release">→</button></div><div class="class-row"><span class="drag">⠿</span><b>07</b><div><strong>Multi-timeframe analysis</strong><small>16 Aug · David Thomas · No resources</small></div><span class="status scheduled">Scheduled</span><button>•••</button></div></div></section><aside class="panel planner-summary"><h2>Batch summary</h2><dl><div><dt>Classes</dt><dd>9 of 16 conducted</dd></div><div><dt>Released</dt><dd>8 classes</dd></div><div><dt>Next class</dt><dd>16 Aug · 6:00 PM</dd></div><div><dt>Instructor</dt><dd>David Thomas</dd></div></dl><button class="btn primary full" data-screen="release">Review pending release</button></aside></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen app-screen" id="release" aria-labelledby="release-title">
+      <aside class="sidebar">
+        <div class="sidebar-logo"><img src="../../../assets/trade-tuter-logo-concept.png" alt="Drive the Market"></div>
+        <nav><button class="side-link" data-screen="admin"><span>⌂</span>Overview</button><button class="side-link"><span>♙</span>Students</button><button class="side-link"><span>▦</span>Batches</button><button class="side-link active"><span>⇧</span>Materials</button></nav>
+        <div class="sidebar-bottom"><div class="user-mini"><div class="avatar">AM</div><div><strong>Amina Mathew</strong><span>Academic Manager</span></div></div></div>
+      </aside>
+      <div class="app-main">
+        <header class="app-header"><button class="menu-toggle">☰</button><div class="search">⌕ <span>Search materials and classes…</span></div><div class="app-actions"><button class="icon-btn">♢<i>3</i></button><div class="avatar">AM</div></div></header>
+        <div class="release-page">
+          <button class="back" data-screen="admin">← Materials &amp; recordings</button>
+          <div class="page-head compact"><div><span class="eyebrow">Release review</span><h1 id="release-title">Trend, range, and breakout structure</h1><p>Technical Analysis · July B · Class 06</p></div><span class="status completed">Class completed</span></div>
+          <div class="release-grid"><section>
+            <div class="release-summary"><div class="check-circle">✓</div><div><h2>Ready for release</h2><p>The class is complete and all selected resources are approved.</p></div></div>
+            <article class="panel resource-panel"><div class="panel-head"><div><h2>Resources to release</h2><p>4 approved resources · 28 active students</p></div><button class="text-button" data-action="select-all">Select all</button></div>
+              <label class="resource"><input type="checkbox" checked><span class="file-icon">PDF</span><div><strong>Class 06 study notes</strong><small>PDF · 2.4 MB · Download allowed</small></div><span class="status approved">Approved</span></label>
+              <label class="resource"><input type="checkbox" checked><span class="file-icon video">▶</span><div><strong>Class 06 recording</strong><small>Video · 01:18:24 · Stream only</small></div><span class="status approved">Ready</span></label>
+              <label class="resource"><input type="checkbox" checked><span class="file-icon">PDF</span><div><strong>Breakout validation checklist</strong><small>PDF · 860 KB · Download allowed</small></div><span class="status approved">Approved</span></label>
+              <label class="resource"><input type="checkbox" checked><span class="file-icon link">↗</span><div><strong>Chart practice examples</strong><small>External learning link</small></div><span class="status approved">Approved</span></label>
+            </article>
+            <article class="panel timeline"><h2>Class history</h2><div><i></i><section><strong>Class conducted</strong><small>09 Aug 2026, 7:34 PM · David Thomas</small></section></div><div><i></i><section><strong>Class completed</strong><small>09 Aug 2026, 8:02 PM · Amina Mathew</small></section></div><div><i class="pending-dot"></i><section><strong>Waiting for release</strong><small>Students do not currently have access</small></section></div></article>
+          </section><aside><article class="panel release-card-panel"><span class="eyebrow">Student impact</span><strong class="impact-number">28</strong><p>active students will receive access immediately.</p><hr><label class="notify-check"><input type="checkbox" checked> Send in-app notification</label><label class="notify-check"><input type="checkbox" checked> Send email notification</label><button class="btn primary full large" data-action="open-release">Release 4 materials</button><p class="security-note">🔒 This action is recorded in the audit log.</p></article><article class="panel warning-panel"><h3>Need to stop access later?</h3><p>Academic Managers can re-lock released resources with a mandatory reason.</p></article></aside></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen student-screen" id="student" aria-labelledby="student-title">
+      <header class="student-header"><button class="student-logo" data-view="student-home"><img src="../../../assets/trade-tuter-logo-concept.png" alt="Drive the Market"></button><nav><button class="student-link active" data-view="student-home">Dashboard</button><button class="student-link" data-view="learning">My learning</button><button class="student-link">Schedule</button><button class="student-link">Progress</button></nav><div class="app-actions"><button class="icon-btn">♢<i>2</i></button><div class="avatar">AN</div></div></header>
+      <div class="student-view active" id="student-home">
+        <div class="student-container"><div class="student-welcome"><div><span class="eyebrow">Saturday, 15 August</span><h1 id="student-title">Welcome back, Anjali</h1><p>Continue where you left off or prepare for your next live class.</p></div><div class="overall"><div class="donut small-donut"><span>68%</span></div><div><small>COURSE PROGRESS</small><strong>Technical Analysis</strong><span>11 of 16 classes completed</span></div></div></div>
+          <section class="next-class"><div><span class="status scheduled">NEXT LIVE CLASS</span><h2>Multi-timeframe analysis</h2><p>Technical Analysis · Class 07</p><div class="class-meta"><span>◷ Sunday, 16 August · 6:00 PM</span><span>♙ David Thomas</span></div></div><button class="btn silver large" data-action="class-details">View class details</button></section>
+          <div class="student-grid"><section><div class="section-heading small-heading"><div><span class="eyebrow">Continue learning</span><h2>Pick up where you stopped</h2></div><button class="text-button" data-view="learning">My learning →</button></div><article class="continue-card" data-view="learning"><div class="video-thumb"><span>▶</span><small>42:16 / 1:18:24</small></div><div><span class="status released">RELEASED</span><h3>Trend, range, and breakout structure</h3><p>Technical Analysis · Class 06</p><div class="progress"><i style="width:54%"></i></div><small>54% watched · Continue video</small></div></article><h2 class="subhead">Newly released</h2><div class="released-list"><button data-view="learning"><span class="file-icon">PDF</span><div><strong>Class 06 study notes</strong><small>Released 10 Aug · PDF</small></div><b>→</b></button><button data-view="learning"><span class="file-icon">PDF</span><div><strong>Breakout validation checklist</strong><small>Released 10 Aug · PDF</small></div><b>→</b></button></div></section><aside><article class="panel"><div class="panel-head"><h2>Announcements</h2><button class="text-button">View all</button></div><div class="announcement"><i></i><div><strong>Market review session added</strong><p>A special review is scheduled for Friday.</p><small>2 hours ago</small></div></div><div class="announcement"><i></i><div><strong>Class 07 preparation</strong><p>Please review the marked charts before Sunday.</p><small>Yesterday</small></div></div></article><article class="panel access-card"><span class="eyebrow">Your access</span><h3>Technical Analysis · July B</h3><p>Active until 31 October 2026</p><div class="progress"><i style="width:68%"></i></div></article></aside></div>
+        </div>
+      </div>
+      <div class="student-view" id="learning">
+        <div class="learning-layout"><aside class="course-outline"><button class="back" data-view="student-home">← Dashboard</button><span class="eyebrow">Technical Analysis</span><h2>Course syllabus</h2><div class="outline-progress"><div class="progress"><i style="width:68%"></i></div><small>68% complete</small></div><div class="outline-module"><button><span>✓</span><div><small>MODULE 1</small><strong>Chart foundations</strong></div></button></div><div class="outline-module active"><button><span>2</span><div><small>MODULE 2</small><strong>Price action &amp; levels</strong></div></button><a>05 · Support and resistance <b>✓</b></a><a class="current">06 · Trend and breakout <b>▶</b></a><a class="locked">07 · Multi-timeframe <b>⌁</b></a></div><div class="outline-module"><button><span>3</span><div><small>MODULE 3</small><strong>Indicators</strong></div></button></div></aside><main class="lesson"><div class="lesson-head"><div><span class="eyebrow">Module 2 · Class 06</span><h1>Trend, range, and breakout structure</h1><p>Released 10 August · Instructor: David Thomas</p></div><button class="btn ghost" data-action="mark-complete">✓ Mark complete</button></div><div class="video-player"><div class="chart-bg"></div><button aria-label="Play lesson">▶</button><div class="video-controls"><span>▶</span><div class="video-track"><i></i></div><span>42:16 / 1:18:24</span><span>⚙</span><span>⛶</span></div></div><div class="lesson-tabs"><button class="active">Overview</button><button>Resources <span>3</span></button><button>Transcript</button></div><article class="lesson-content"><h2>What you will learn</h2><ul><li>Identify trending and ranging market structures.</li><li>Distinguish valid breakouts from weak price movement.</li><li>Apply a repeatable multi-step confirmation process.</li></ul><h2>Class resources</h2><div class="released-list"><button><span class="file-icon">PDF</span><div><strong>Class 06 study notes</strong><small>PDF · 2.4 MB</small></div><b>↓</b></button><button><span class="file-icon">PDF</span><div><strong>Breakout validation checklist</strong><small>PDF · 860 KB</small></div><b>↓</b></button><button><span class="file-icon link">↗</span><div><strong>Chart practice examples</strong><small>External resource</small></div><b>→</b></button></div></article></main></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="dialog-backdrop" id="release-dialog" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><div class="dialog-icon">⇧</div><h2 id="dialog-title">Release materials now?</h2><p>Four approved resources will become available immediately to 28 active students in Technical Analysis · July B.</p><div class="dialog-summary"><span>Class</span><strong>Trend, range, and breakout structure</strong><span>Notifications</span><strong>In-app and email</strong></div><div class="dialog-actions"><button class="btn ghost" data-action="close-dialog">Cancel</button><button class="btn primary" data-action="confirm-release">Confirm release</button></div></div>
+  </div>
+  <div class="dialog-backdrop" id="enquiry-dialog" hidden>
+    <div class="dialog enquiry-dialog" role="dialog" aria-modal="true"><button class="dialog-close" data-action="close-enquiry">×</button><span class="eyebrow">Course enquiry</span><h2>Let's find your learning path.</h2><label>Full name<input value="Anjali Nair"></label><label>Email address<input type="email" placeholder="you@example.com"></label><label>Course interest<select><option>Technical Analysis</option><option>Trading Essentials</option><option>Options Strategy</option></select></label><div class="dialog-actions"><button class="btn ghost" data-action="close-enquiry">Cancel</button><button class="btn primary" data-action="submit-enquiry">Send enquiry</button></div></div>
+  </div>
+  <div class="toast" role="status" aria-live="polite"><span>✓</span><div><strong>Materials released</strong><small>28 students now have access.</small></div></div>
+  <script src="app.js"></script>
+</body>
+</html>

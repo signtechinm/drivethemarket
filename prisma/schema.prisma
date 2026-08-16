@@ -1,0 +1,527 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+  DEACTIVATED
+}
+
+enum BatchStatus {
+  DRAFT
+  ENROLLING
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum EnrolmentStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  COMPLETED
+  CANCELLED
+}
+
+enum ClassStatus {
+  DRAFT
+  SCHEDULED
+  CONDUCTED
+  COMPLETED
+  RELEASED
+  RESCHEDULED
+  CANCELLED
+}
+
+enum MaterialType {
+  DOCUMENT
+  PRESENTATION
+  IMAGE
+  WORKSHEET
+  ASSIGNMENT
+  EXTERNAL_LINK
+  VIDEO
+  DOWNLOAD
+}
+
+enum MaterialStatus {
+  DRAFT
+  IN_REVIEW
+  CHANGES_REQUESTED
+  APPROVED
+  RELEASED
+  RELOCKED
+  ARCHIVED
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  READ
+}
+
+model User {
+  id                String               @id @default(cuid())
+  email             String               @unique
+  name              String
+  phone             String?
+  passwordHash      String?
+  status            UserStatus           @default(INVITED)
+  emailVerifiedAt   DateTime?
+  invitedAt         DateTime?
+  lastLoginAt       DateTime?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  studentProfile    StudentProfile?
+  instructorProfile InstructorProfile?
+  roles             UserRole[]
+  instructorBatches InstructorAssignment[]
+  uploadedMaterials Material[]           @relation("MaterialUploader")
+  releases          MaterialRelease[]    @relation("MaterialReleaseActor")
+  announcements     Announcement[]        @relation("AnnouncementAuthor")
+  notifications     Notification[]
+  auditLogs         AuditLog[]            @relation("AuditActor")
+  editedPages       WebsitePage[]         @relation("WebsitePageEditor")
+  invitationTokens  InvitationToken[]
+  passwordResetTokens PasswordResetToken[]
+  taughtClasses       ClassSession[]        @relation("ClassInstructor")
+  notificationPreferences NotificationPreference[]
+
+  @@index([status])
+}
+
+model InvitationToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model Role {
+  id          String           @id @default(cuid())
+  key         String           @unique
+  name        String
+  description String?
+  system      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  users       UserRole[]
+  permissions RolePermission[]
+}
+
+model Permission {
+  id          String           @id @default(cuid())
+  key         String           @unique
+  description String
+  roles       RolePermission[]
+}
+
+model UserRole {
+  userId     String
+  roleId     String
+  assignedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role       Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@index([roleId])
+}
+
+model RolePermission {
+  roleId      String
+  permissionId String
+  role        Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission  Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+}
+
+model StudentProfile {
+  id             String      @id @default(cuid())
+  userId         String      @unique
+  studentNumber  String      @unique
+  address        String?
+  dateOfBirth    DateTime?
+  emergencyName  String?
+  emergencyPhone String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enrolments     Enrolment[]
+}
+
+model InstructorProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  bio       String?
+  expertise String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id          String             @id @default(cuid())
+  code        String             @unique
+  title       String
+  slug        String             @unique
+  description String?
+  active      Boolean            @default(true)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  syllabuses  SyllabusTemplate[]
+  batches     Batch[]
+  enquiries   WebsiteEnquiry[]
+
+  @@index([active])
+}
+
+model SyllabusTemplate {
+  id          String           @id @default(cuid())
+  courseId    String
+  title       String
+  version     Int              @default(1)
+  description String?
+  publishedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  course      Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  modules     TemplateModule[]
+
+  @@unique([courseId, version])
+}
+
+model TemplateModule {
+  id          String          @id @default(cuid())
+  syllabusId  String
+  title       String
+  description String?
+  position    Int
+  syllabus    SyllabusTemplate @relation(fields: [syllabusId], references: [id], onDelete: Cascade)
+  classes     TemplateClass[]
+
+  @@unique([syllabusId, position])
+}
+
+model TemplateClass {
+  id               String         @id @default(cuid())
+  moduleId         String
+  title            String
+  description      String?
+  learningOutcomes String[]
+  expectedMinutes  Int?
+  position         Int
+  module           TemplateModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([moduleId, position])
+}
+
+model Batch {
+  id               String                 @id @default(cuid())
+  courseId         String
+  code             String                 @unique
+  name             String
+  status           BatchStatus            @default(DRAFT)
+  capacity         Int?
+  startsAt         DateTime
+  endsAt           DateTime?
+  enrolmentStartsAt DateTime?
+  enrolmentEndsAt  DateTime?
+  liveClassUrl     String?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  course           Course                 @relation(fields: [courseId], references: [id])
+  modules          BatchModule[]
+  enrolments       Enrolment[]
+  instructors      InstructorAssignment[]
+  announcements    Announcement[]
+
+  @@index([courseId, status])
+  @@index([startsAt])
+}
+
+model BatchModule {
+  id          String         @id @default(cuid())
+  batchId     String
+  title       String
+  description String?
+  position    Int
+  batch       Batch          @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  classes     ClassSession[]
+
+  @@unique([batchId, position])
+}
+
+model ClassSession {
+  id               String       @id @default(cuid())
+  moduleId         String
+  title            String
+  description      String?
+  learningOutcomes String[]
+  position         Int
+  status           ClassStatus  @default(DRAFT)
+  scheduledAt      DateTime?
+  conductedAt      DateTime?
+  completedAt      DateTime?
+  releasedAt       DateTime?
+  expectedMinutes  Int?
+  liveClassUrl     String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  module           BatchModule  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  instructorId     String?
+  instructor       User?        @relation("ClassInstructor", fields: [instructorId], references: [id], onDelete: SetNull)
+  materials        Material[]
+
+  @@unique([moduleId, position])
+  @@index([status, scheduledAt])
+  @@index([instructorId, scheduledAt])
+}
+
+model InstructorAssignment {
+  userId     String
+  batchId    String
+  assignedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  batch      Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@id([userId, batchId])
+  @@index([batchId])
+}
+
+model Enrolment {
+  id           String            @id @default(cuid())
+  studentId    String
+  batchId      String
+  status       EnrolmentStatus   @default(PENDING)
+  enrolledAt   DateTime          @default(now())
+  accessStartsAt DateTime?
+  accessEndsAt DateTime?
+  notes        String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  student      StudentProfile    @relation(fields: [studentId], references: [id])
+  batch        Batch             @relation(fields: [batchId], references: [id])
+  materialProgress MaterialProgress[]
+  videoProgress VideoProgress[]
+
+  @@unique([studentId, batchId])
+  @@index([batchId, status])
+  @@index([accessEndsAt])
+}
+
+model Material {
+  id              String          @id @default(cuid())
+  classSessionId  String
+  uploadedById    String
+  title           String
+  description     String?
+  type            MaterialType
+  status          MaterialStatus  @default(DRAFT)
+  position        Int
+  required        Boolean         @default(true)
+  downloadAllowed Boolean         @default(false)
+  storageKey      String?
+  externalUrl     String?
+  mimeType        String?
+  sizeBytes       BigInt?
+  approvedAt      DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  classSession    ClassSession    @relation(fields: [classSessionId], references: [id], onDelete: Cascade)
+  uploadedBy      User            @relation("MaterialUploader", fields: [uploadedById], references: [id])
+  videoAsset      VideoAsset?
+  releases        MaterialRelease[]
+  progress        MaterialProgress[]
+
+  @@unique([classSessionId, position])
+  @@index([classSessionId, status])
+}
+
+model VideoAsset {
+  id          String          @id @default(cuid())
+  materialId  String          @unique
+  provider    String
+  providerKey String          @unique
+  durationSeconds Int?
+  playbackReady Boolean       @default(false)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  material    Material        @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  progress    VideoProgress[]
+}
+
+model MaterialRelease {
+  id          String    @id @default(cuid())
+  materialId  String
+  actorId     String
+  releasedAt  DateTime  @default(now())
+  revokedAt   DateTime?
+  revokeReason String?
+  material    Material  @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  actor       User      @relation("MaterialReleaseActor", fields: [actorId], references: [id])
+
+  @@index([materialId, releasedAt])
+}
+
+model MaterialProgress {
+  id          String     @id @default(cuid())
+  enrolmentId String
+  materialId  String
+  openedAt    DateTime?
+  completedAt DateTime?
+  updatedAt   DateTime   @updatedAt
+  enrolment   Enrolment  @relation(fields: [enrolmentId], references: [id], onDelete: Cascade)
+  material    Material   @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@unique([enrolmentId, materialId])
+  @@index([materialId])
+}
+
+model VideoProgress {
+  id              String     @id @default(cuid())
+  enrolmentId     String
+  videoAssetId    String
+  positionSeconds Int        @default(0)
+  percentComplete Decimal    @default(0) @db.Decimal(5, 2)
+  completedAt     DateTime?
+  updatedAt       DateTime   @updatedAt
+  enrolment       Enrolment  @relation(fields: [enrolmentId], references: [id], onDelete: Cascade)
+  videoAsset      VideoAsset @relation(fields: [videoAssetId], references: [id], onDelete: Cascade)
+
+  @@unique([enrolmentId, videoAssetId])
+  @@index([videoAssetId])
+}
+
+model Announcement {
+  id          String   @id @default(cuid())
+  batchId     String?
+  authorId    String
+  title       String
+  body        String
+  publishedAt DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  batch       Batch?   @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  author      User     @relation("AnnouncementAuthor", fields: [authorId], references: [id])
+
+  @@index([batchId, publishedAt])
+}
+
+model Notification {
+  id        String             @id @default(cuid())
+  userId    String
+  channel   NotificationChannel
+  status    NotificationStatus @default(PENDING)
+  subject   String
+  body      String
+  eventKey  String             @default("general")
+  relatedEntityType String?
+  relatedEntityId String?
+  attemptCount Int             @default(0)
+  lastAttemptAt DateTime?
+  lastError String?
+  sentAt    DateTime?
+  readAt    DateTime?
+  createdAt DateTime           @default(now())
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status, createdAt])
+  @@index([channel, status, createdAt])
+  @@index([eventKey, relatedEntityId])
+}
+
+model NotificationPreference {
+  id           String   @id @default(cuid())
+  userId       String
+  eventKey     String
+  inAppEnabled Boolean  @default(true)
+  emailEnabled Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventKey])
+  @@index([userId])
+}
+
+model WebsitePage {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  content     Json
+  published   Boolean  @default(false)
+  editedById  String
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  editedBy    User     @relation("WebsitePageEditor", fields: [editedById], references: [id])
+}
+
+model WebsiteEnquiry {
+  id        String   @id @default(cuid())
+  courseId  String?
+  name      String
+  email     String
+  phone     String?
+  message   String?
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course?  @relation(fields: [courseId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String?
+  metadata   Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+  actor      User?    @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorId, createdAt])
+}
+
+model SystemSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}

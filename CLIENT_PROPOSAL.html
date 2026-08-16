@@ -1,0 +1,1692 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trading Education Platform — Client Concept & Project Plan</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 15mm 16mm 16mm;
+      }
+      @page:first {
+        margin: 0;
+      }
+      :root {
+        --navy: #071b2d;
+        --navy2: #0d2940;
+        --teal: #087f83;
+        --mint: #38c6aa;
+        --gold: #d6a64a;
+        --ink: #172633;
+        --muted: #5e6d78;
+        --line: #dce5e7;
+        --soft: #f2f7f7;
+        --paper: #fff;
+        --danger: #c45b56;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: #ddd;
+        font-family: Inter, Aptos, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.46;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto 8mm;
+        background: var(--paper);
+        position: relative;
+        overflow: hidden;
+        padding: 15mm 16mm 16mm;
+        page-break-after: always;
+      }
+      .page:last-child {
+        page-break-after: auto;
+      }
+      .cover {
+        padding: 0;
+        color: #fff;
+        background: var(--navy);
+      }
+      .cover img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cover:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(2, 17, 30, 0.1),
+          rgba(2, 17, 30, 0.02) 55%,
+          rgba(2, 17, 30, 0.65)
+        );
+      }
+      .cover-copy {
+        position: absolute;
+        z-index: 2;
+        left: 17mm;
+        right: 17mm;
+        top: 22mm;
+      }
+      .eyebrow {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 2.4px;
+        color: var(--mint);
+        font-weight: 700;
+      }
+      .cover h1 {
+        margin: 6mm 0 4mm;
+        max-width: 165mm;
+        font-size: 34pt;
+        line-height: 1.02;
+        letter-spacing: -1.2px;
+      }
+      .cover .subtitle {
+        max-width: 140mm;
+        margin: 0;
+        color: #d7e8ed;
+        font-size: 14pt;
+        line-height: 1.5;
+      }
+      .cover-meta {
+        position: absolute;
+        z-index: 2;
+        left: 17mm;
+        right: 17mm;
+        bottom: 13mm;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        padding-top: 5mm;
+        display: flex;
+        justify-content: space-between;
+        color: #d9e8ea;
+        font-size: 9pt;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 4mm;
+        margin-bottom: 8mm;
+      }
+      .section-label {
+        color: var(--teal);
+        font-size: 8.5pt;
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        font-weight: 800;
+      }
+      .page-no {
+        color: #8a989f;
+        font-size: 8.5pt;
+      }
+      h2 {
+        margin: 0 0 4mm;
+        color: var(--navy);
+        font-size: 23pt;
+        line-height: 1.12;
+        letter-spacing: -0.5px;
+      }
+      h3 {
+        margin: 5mm 0 2mm;
+        color: var(--navy2);
+        font-size: 13pt;
+      }
+      h4 {
+        margin: 0 0 1.5mm;
+        color: var(--navy);
+        font-size: 10.5pt;
+      }
+      p {
+        margin: 0 0 3mm;
+        font-size: 10pt;
+      }
+      ul,
+      ol {
+        margin: 2mm 0 3mm 5mm;
+        padding-left: 4mm;
+      }
+      li {
+        margin-bottom: 1.5mm;
+        font-size: 9.7pt;
+      }
+      .lead {
+        font-size: 13pt;
+        line-height: 1.55;
+        color: #314854;
+        max-width: 165mm;
+      }
+      .callout {
+        border-left: 4px solid var(--mint);
+        background: var(--soft);
+        padding: 4mm 5mm;
+        margin: 5mm 0;
+        border-radius: 0 3mm 3mm 0;
+      }
+      .callout strong {
+        color: var(--navy);
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5mm;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4mm;
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 3mm;
+        padding: 4mm;
+        background: #fff;
+        break-inside: avoid;
+      }
+      .card.accent {
+        border-top: 4px solid var(--teal);
+      }
+      .card p,
+      .card li {
+        font-size: 9pt;
+      }
+      .icon {
+        width: 9mm;
+        height: 9mm;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #dff5f1;
+        color: var(--teal);
+        font-weight: 800;
+        font-size: 12pt;
+        margin-bottom: 2.5mm;
+      }
+      .pill {
+        display: inline-block;
+        padding: 1.2mm 3mm;
+        border-radius: 99px;
+        color: var(--teal);
+        background: #e5f5f3;
+        font-weight: 700;
+        font-size: 8pt;
+        margin: 0 1mm 1.5mm 0;
+      }
+      .diagram {
+        margin: 5mm 0;
+        padding: 5mm;
+        border-radius: 4mm;
+        background: linear-gradient(145deg, #f7fbfb, #edf5f5);
+        border: 1px solid #d8e8e7;
+      }
+      .diagram-title {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        color: var(--teal);
+        font-weight: 800;
+        margin-bottom: 4mm;
+      }
+      .three-platforms {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5mm;
+        position: relative;
+      }
+      .platform {
+        min-height: 40mm;
+        background: #fff;
+        border-radius: 3mm;
+        border-top: 4px solid var(--mint);
+        padding: 4mm;
+        box-shadow: 0 2mm 5mm rgba(7, 27, 45, 0.06);
+      }
+      .platform:nth-child(2) {
+        border-color: var(--gold);
+      }
+      .platform:nth-child(3) {
+        border-color: var(--teal);
+      }
+      .platform .num {
+        float: right;
+        color: #c8d8da;
+        font-weight: 800;
+        font-size: 18pt;
+      }
+      .hub {
+        width: 63mm;
+        margin: 6mm auto 0;
+        text-align: center;
+        color: #fff;
+        background: var(--navy);
+        padding: 4mm;
+        border-radius: 99px;
+        font-size: 9pt;
+        font-weight: 700;
+      }
+      .tree {
+        text-align: center;
+      }
+      .node {
+        display: inline-block;
+        min-width: 48mm;
+        padding: 3mm 5mm;
+        border-radius: 3mm;
+        background: var(--navy);
+        color: #fff;
+        font-weight: 700;
+        font-size: 10pt;
+      }
+      .node.alt {
+        background: var(--teal);
+      }
+      .node.light {
+        background: #fff;
+        color: var(--navy);
+        border: 1px solid #b9d2d3;
+      }
+      .vline {
+        width: 1px;
+        height: 6mm;
+        background: #8ababc;
+        margin: 0 auto;
+      }
+      .children {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3mm;
+        position: relative;
+        padding-top: 6mm;
+      }
+      .children:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 12%;
+        right: 12%;
+        height: 1px;
+        background: #8ababc;
+      }
+      .children .node {
+        min-width: 0;
+        width: 100%;
+        padding: 3mm 1mm;
+        font-size: 8.5pt;
+      }
+      .children .node:before {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 6mm;
+        background: #8ababc;
+        position: absolute;
+        top: 0;
+        transform: translateY(-100%);
+      }
+      .flow {
+        display: flex;
+        align-items: stretch;
+        gap: 2mm;
+      }
+      .step {
+        flex: 1;
+        position: relative;
+        padding: 4mm 3mm;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 3mm;
+        min-height: 41mm;
+      }
+      .step:not(:last-child):after {
+        content: "›";
+        position: absolute;
+        right: -4mm;
+        top: 14mm;
+        z-index: 2;
+        color: var(--teal);
+        font-size: 20pt;
+        font-weight: 800;
+      }
+      .step .n {
+        display: block;
+        width: 7mm;
+        height: 7mm;
+        line-height: 7mm;
+        text-align: center;
+        border-radius: 50%;
+        background: var(--teal);
+        color: #fff;
+        font-size: 8pt;
+        font-weight: 800;
+        margin-bottom: 2mm;
+      }
+      .step.locked {
+        border-top: 3px solid var(--gold);
+      }
+      .step.release {
+        background: var(--navy);
+        color: #fff;
+        border-color: var(--navy);
+      }
+      .step.release h4 {
+        color: #fff;
+      }
+      .role-row {
+        display: grid;
+        grid-template-columns: 34mm 1fr;
+        gap: 4mm;
+        padding: 3mm 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .role-row:last-child {
+        border-bottom: 0;
+      }
+      .role-name {
+        color: var(--navy);
+        font-weight: 800;
+        font-size: 9.5pt;
+      }
+      .role-desc {
+        color: #53646d;
+        font-size: 9pt;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 4mm 0;
+        font-size: 8.8pt;
+      }
+      th {
+        text-align: left;
+        background: var(--navy);
+        color: #fff;
+        padding: 2.6mm;
+      }
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 2.4mm 2.6mm;
+        vertical-align: top;
+      }
+      tr:nth-child(even) td {
+        background: #f7fafa;
+      }
+      .status {
+        font-weight: 700;
+        color: var(--teal);
+      }
+      .roadmap {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3mm;
+        margin-top: 5mm;
+      }
+      .phase {
+        border-radius: 3mm;
+        color: #fff;
+        background: var(--navy);
+        padding: 4mm 3mm;
+        min-height: 43mm;
+      }
+      .phase:nth-child(even) {
+        background: var(--teal);
+      }
+      .phase .phase-no {
+        font-size: 8pt;
+        color: #9de5d6;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .phase:nth-child(even) .phase-no {
+        color: #d8fffa;
+      }
+      .phase h4 {
+        color: #fff;
+        margin-top: 2mm;
+      }
+      .phase p {
+        font-size: 8.2pt;
+        color: #d7e3e7;
+      }
+      .phase:nth-child(even) p {
+        color: #e2f5f3;
+      }
+      .checklist {
+        columns: 2;
+        column-gap: 8mm;
+      }
+      .check {
+        break-inside: avoid;
+        padding: 2mm 0 2mm 8mm;
+        position: relative;
+        font-size: 9.3pt;
+      }
+      .check:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 1.5mm;
+        width: 5mm;
+        height: 5mm;
+        line-height: 5mm;
+        text-align: center;
+        background: #dff5ef;
+        color: var(--teal);
+        border-radius: 50%;
+        font-weight: 800;
+      }
+      .scope-out {
+        color: #687982;
+      }
+      .footer-note {
+        position: absolute;
+        left: 16mm;
+        bottom: 7mm;
+        color: #8b989f;
+        font-size: 7.5pt;
+      }
+      .decision {
+        display: grid;
+        grid-template-columns: 7mm 1fr;
+        gap: 2mm;
+        padding: 2.5mm 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .decision .mark {
+        color: var(--gold);
+        font-size: 15pt;
+        line-height: 1;
+      }
+      .small {
+        font-size: 8.5pt;
+        color: var(--muted);
+      }
+      .academic .topbar {
+        margin-bottom: 5mm;
+      }
+      .academic .lead {
+        font-size: 11.5pt;
+        line-height: 1.4;
+      }
+      .academic .diagram {
+        margin: 3mm 0;
+        padding: 3mm;
+      }
+      .academic .diagram-title {
+        margin-bottom: 2mm;
+      }
+      .academic .vline {
+        height: 4mm;
+      }
+      .academic .children {
+        padding-top: 4mm;
+      }
+      .academic .grid-2 {
+        gap: 3mm;
+      }
+      .academic .card {
+        padding: 3mm;
+      }
+      .academic h3 {
+        margin: 3mm 0 1mm;
+      }
+      .academic table {
+        margin: 2mm 0;
+        font-size: 8pt;
+      }
+      .academic th,
+      .academic td {
+        padding: 1.8mm 2.2mm;
+      }
+      .highlight-band {
+        margin: 5mm -16mm 0;
+        padding: 7mm 16mm;
+        color: #fff;
+        background: var(--navy);
+      }
+      .highlight-band h3 {
+        margin-top: 0;
+        color: #fff;
+      }
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3mm;
+      }
+      .metric {
+        text-align: center;
+        border-right: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .metric:last-child {
+        border-right: 0;
+      }
+      .metric b {
+        display: block;
+        color: var(--mint);
+        font-size: 17pt;
+      }
+      .metric span {
+        font-size: 8pt;
+        color: #dbe5e8;
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page cover">
+      <img
+        src="assets/trading-education-cover.png"
+        alt="Trading education platform concept illustration"
+      />
+      <div class="cover-copy">
+        <div class="eyebrow">Client Concept &amp; Project Plan</div>
+        <h1>Trading Education Platform</h1>
+        <p class="subtitle">
+          A secure digital learning experience connecting live trading classes,
+          structured study materials, recordings, and measurable student
+          progress.
+        </p>
+      </div>
+      <div class="cover-meta">
+        <span>Prepared for client discussion</span
+        ><span>August 2026 · Version 1.0</span>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Executive summary</span
+        ><span class="page-no">02</span>
+      </div>
+      <h2>The concept, in one view</h2>
+      <p class="lead">
+        The proposed platform gives the institution one controlled place to
+        manage its academic operations and gives every student a simple,
+        structured learning journey.
+      </p>
+
+      <div class="diagram">
+        <div class="diagram-title">The connected platform</div>
+        <div class="three-platforms">
+          <div class="platform">
+            <span class="num">01</span>
+            <h3>Public website</h3>
+            <p>
+              Institution profile, courses, faculty, upcoming batches,
+              testimonials, enquiries, and student-login access.
+            </p>
+          </div>
+          <div class="platform">
+            <span class="num">02</span>
+            <h3>Admin backend</h3>
+            <p>
+              Users, permissions, students, batches, syllabuses, classes,
+              learning materials, reports, and release controls.
+            </p>
+          </div>
+          <div class="platform">
+            <span class="num">03</span>
+            <h3>Student portal</h3>
+            <p>
+              Class schedule, released notes and videos, announcements, learning
+              history, and personal progress.
+            </p>
+          </div>
+        </div>
+        <div class="hub">One secure academic data and content platform</div>
+      </div>
+
+      <div class="callout">
+        <strong>Central rule:</strong> materials and recordings can be prepared
+        before a class, but students receive access only after the live class is
+        completed and an authorized staff member releases the content.
+      </div>
+
+      <h3>Expected value</h3>
+      <div class="grid-3">
+        <div class="card accent">
+          <div class="icon">✓</div>
+          <h4>Academic control</h4>
+          <p>
+            Students learn in the intended sequence, with every release
+            traceable.
+          </p>
+        </div>
+        <div class="card accent">
+          <div class="icon">↗</div>
+          <h4>Better experience</h4>
+          <p>
+            One place for schedules, recordings, notes, notices, and progress.
+          </p>
+        </div>
+        <div class="card accent">
+          <div class="icon">◎</div>
+          <h4>Operational clarity</h4>
+          <p>
+            Staff can see upcoming classes, pending releases, and engagement.
+          </p>
+        </div>
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Users &amp; governance</span
+        ><span class="page-no">03</span>
+      </div>
+      <h2>Right access for every role</h2>
+      <p class="lead">
+        Permissions will be role-based and enforced by the server. Staff members
+        only see and perform functions appropriate to their responsibilities.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="role-row">
+            <div class="role-name">Super Admin</div>
+            <div class="role-desc">
+              Full control of the platform, security, settings, and access.
+            </div>
+          </div>
+          <div class="role-row">
+            <div class="role-name">Administrator</div>
+            <div class="role-desc">
+              Students, batches, enrolments, operational reports, and accounts.
+            </div>
+          </div>
+          <div class="role-row">
+            <div class="role-name">Academic Manager</div>
+            <div class="role-desc">
+              Syllabus planning, class completion, approvals, and releases.
+            </div>
+          </div>
+          <div class="role-row">
+            <div class="role-name">Instructor</div>
+            <div class="role-desc">
+              Assigned classes, materials, recordings, and learner visibility.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="role-row">
+            <div class="role-name">Content Manager</div>
+            <div class="role-desc">
+              Uploads, descriptions, ordering, and resource preparation.
+            </div>
+          </div>
+          <div class="role-row">
+            <div class="role-name">Website Editor</div>
+            <div class="role-desc">
+              Public pages, trainers, testimonials, FAQs, and notices.
+            </div>
+          </div>
+          <div class="role-row">
+            <div class="role-name">Student</div>
+            <div class="role-desc">
+              Only own enrolments, available classes, content, and progress.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Permission examples</h3>
+      <div>
+        <span class="pill">Manage users</span
+        ><span class="pill">Assign roles</span
+        ><span class="pill">Create batches</span
+        ><span class="pill">Enrol students</span>
+        <span class="pill">Plan classes</span
+        ><span class="pill">Upload materials</span
+        ><span class="pill">Approve content</span
+        ><span class="pill">Complete class</span>
+        <span class="pill">Release materials</span
+        ><span class="pill">View reports</span
+        ><span class="pill">Edit website</span
+        ><span class="pill">Review audit log</span>
+      </div>
+
+      <div class="callout">
+        <strong>Governance recommendation:</strong> for stronger control,
+        uploading content and releasing it can be assigned to different roles.
+        This creates a simple review-and-approval process.
+      </div>
+
+      <h3>Protection principles</h3>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Least access</h4>
+          <p>Give each user only the permissions needed for their work.</p>
+        </div>
+        <div class="card">
+          <h4>Server validation</h4>
+          <p>
+            Hidden buttons are not security; every request is authorized
+            centrally.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Audit history</h4>
+          <p>
+            Record who completed, released, re-locked, or changed important
+            content.
+          </p>
+        </div>
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page academic">
+      <div class="topbar">
+        <span class="section-label">Academic model</span
+        ><span class="page-no">04</span>
+      </div>
+      <h2>A simple learning structure</h2>
+      <p class="lead">
+        Content is organized from the overall course down to each live class, so
+        students always know what comes next and staff can control individual
+        releases.
+      </p>
+
+      <div class="diagram tree">
+        <div class="diagram-title">Academic content hierarchy</div>
+        <div class="node">Course</div>
+        <div class="vline"></div>
+        <div class="node alt">Batch</div>
+        <div class="vline"></div>
+        <div class="node">Batch Syllabus</div>
+        <div class="vline"></div>
+        <div class="node alt">Module</div>
+        <div class="vline"></div>
+        <div class="node">Class Session</div>
+        <div class="vline"></div>
+        <div class="children">
+          <div class="node light">Notes &amp;<br />Documents</div>
+          <div class="node light">Recorded<br />Video</div>
+          <div class="node light">Assignments<br />&amp; Links</div>
+          <div class="node light">Student<br />Progress</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card accent">
+          <h3>Reusable course template</h3>
+          <p>
+            The standard syllabus defines modules, topics, outcomes, and
+            expected duration. It can be reused for future batches.
+          </p>
+        </div>
+        <div class="card accent">
+          <h3>Flexible batch plan</h3>
+          <p>
+            A batch receives its own copy of the syllabus. Dates and instructors
+            can change without affecting other batches.
+          </p>
+        </div>
+      </div>
+
+      <h3>Class lifecycle</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Meaning</th>
+            <th>Student access</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="status">Draft</td>
+            <td>Being prepared internally</td>
+            <td>Not visible</td>
+          </tr>
+          <tr>
+            <td class="status">Scheduled</td>
+            <td>Date, instructor, and live-class details confirmed</td>
+            <td>Schedule visible; resources locked</td>
+          </tr>
+          <tr>
+            <td class="status">Conducted</td>
+            <td>Live class has taken place</td>
+            <td>Resources remain locked</td>
+          </tr>
+          <tr>
+            <td class="status">Completed</td>
+            <td>Academic completion confirmed</td>
+            <td>Ready for release approval</td>
+          </tr>
+          <tr>
+            <td class="status">Released</td>
+            <td>Approved resources published</td>
+            <td>Available to active enrolments</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Core business workflow</span
+        ><span class="page-no">05</span>
+      </div>
+      <h2>Content unlocks only after class</h2>
+      <p class="lead">
+        The system supports preparation in advance without exposing future
+        learning materials. Release is explicit, controlled, and recorded.
+      </p>
+
+      <div class="diagram">
+        <div class="diagram-title">Controlled material-release journey</div>
+        <div class="flow">
+          <div class="step">
+            <span class="n">1</span>
+            <h4>Plan</h4>
+            <p>Schedule class and define objectives.</p>
+          </div>
+          <div class="step locked">
+            <span class="n">2</span>
+            <h4>Prepare</h4>
+            <p>
+              Upload notes and video placeholders. Student access stays locked.
+            </p>
+          </div>
+          <div class="step">
+            <span class="n">3</span>
+            <h4>Teach</h4>
+            <p>Conduct the live class using the external platform.</p>
+          </div>
+          <div class="step">
+            <span class="n">4</span>
+            <h4>Confirm</h4>
+            <p>Instructor or manager marks class completed.</p>
+          </div>
+          <div class="step release">
+            <span class="n">5</span>
+            <h4>Release</h4>
+            <p>Approved resources unlock and students are notified.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card accent">
+          <h3>Manual</h3>
+          <p>
+            An authorized staff member releases the content. Recommended for the
+            MVP.
+          </p>
+        </div>
+        <div class="card accent">
+          <h3>Scheduled</h3>
+          <p>Approved content unlocks at a defined date and time.</p>
+        </div>
+        <div class="card accent">
+          <h3>Delayed</h3>
+          <p>Content unlocks a set period after the class is completed.</p>
+        </div>
+      </div>
+
+      <h3>Rules enforced by the platform</h3>
+      <div class="checklist">
+        <div class="check">Uploading never means publishing.</div>
+        <div class="check">Draft classes cannot release resources.</div>
+        <div class="check">Only authorized roles can confirm completion.</div>
+        <div class="check">Only approved resources are released.</div>
+        <div class="check">Students need an active batch enrolment.</div>
+        <div class="check">Direct links cannot bypass permissions.</div>
+        <div class="check">Staff may preview locked resources.</div>
+        <div class="check">Emergency re-lock is available and audited.</div>
+      </div>
+
+      <div class="callout">
+        <strong>Illustrative example:</strong> “Technical Analysis — Class 06”
+        is visible on the student's timetable. Its PDF and recording remain
+        locked until the Saturday class is completed and the academic manager
+        presses Release.
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Administration</span
+        ><span class="page-no">06</span>
+      </div>
+      <h2>One operational command centre</h2>
+      <p class="lead">
+        The backend brings people, schedules, content, and progress together in
+        a manageable day-to-day workspace.
+      </p>
+
+      <div class="grid-3">
+        <div class="card accent">
+          <div class="icon">U</div>
+          <h4>Users &amp; Roles</h4>
+          <p>
+            Staff accounts, student accounts, permissions, invitations, and
+            status.
+          </p>
+        </div>
+        <div class="card accent">
+          <div class="icon">B</div>
+          <h4>Courses &amp; Batches</h4>
+          <p>
+            Programs, schedules, instructors, capacity, start dates, and batch
+            state.
+          </p>
+        </div>
+        <div class="card accent">
+          <div class="icon">E</div>
+          <h4>Enrolments</h4>
+          <p>
+            Registration, batch assignment, access dates, status, and bulk
+            imports.
+          </p>
+        </div>
+        <div class="card accent">
+          <div class="icon">S</div>
+          <h4>Syllabus Planner</h4>
+          <p>
+            Templates, modules, learning outcomes, classes, sequencing, and
+            rescheduling.
+          </p>
+        </div>
+        <div class="card accent">
+          <div class="icon">M</div>
+          <h4>Materials</h4>
+          <p>
+            Documents, links, videos, ordering, approval, locking, and
+            publishing.
+          </p>
+        </div>
+        <div class="card accent">
+          <div class="icon">R</div>
+          <h4>Reports</h4>
+          <p>
+            Progress, engagement, conducted classes, pending releases, and
+            exports.
+          </p>
+        </div>
+      </div>
+
+      <h3>Dashboard attention list</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Today</th>
+            <th>Needs attention</th>
+            <th>Recent activity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Classes scheduled today</td>
+            <td>Classes awaiting completion</td>
+            <td>New student enrolments</td>
+          </tr>
+          <tr>
+            <td>Upcoming live sessions</td>
+            <td>Materials awaiting approval</td>
+            <td>Recently uploaded recordings</td>
+          </tr>
+          <tr>
+            <td>Active batches and capacity</td>
+            <td>Students with low engagement</td>
+            <td>Content releases and notices</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-band">
+        <h3>Suggested operational indicators</h3>
+        <div class="metric-row">
+          <div class="metric">
+            <b>Students</b><span>active and enrolled</span>
+          </div>
+          <div class="metric">
+            <b>Classes</b><span>planned vs. conducted</span>
+          </div>
+          <div class="metric">
+            <b>Releases</b><span>pending and completed</span>
+          </div>
+          <div class="metric">
+            <b>Progress</b><span>engagement by batch</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Student experience</span
+        ><span class="page-no">07</span>
+      </div>
+      <h2>A clear path through every course</h2>
+      <p class="lead">
+        Students receive a focused portal that shows what is next, what is
+        complete, and which resources are now available.
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <div class="card accent">
+            <h3>Dashboard</h3>
+            <ul>
+              <li>Current course and batch</li>
+              <li>Next live class</li>
+              <li>Newly released content</li>
+              <li>Announcements</li>
+              <li>Overall progress</li>
+            </ul>
+          </div>
+          <div class="card accent" style="margin-top: 4mm">
+            <h3>Learning screen</h3>
+            <ul>
+              <li>Modules in syllabus order</li>
+              <li>Upcoming and completed classes</li>
+              <li>Clearly locked and available resources</li>
+              <li>Notes, links, and protected recordings</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="diagram" style="margin-top: 0">
+            <div class="diagram-title">Example student journey</div>
+            <div class="card" style="border-left: 4px solid var(--mint)">
+              <h4>Module 1 · Market Foundations</h4>
+              <p class="small">3 of 3 classes complete</p>
+            </div>
+            <div class="vline"></div>
+            <div class="card" style="border-left: 4px solid var(--teal)">
+              <h4>Module 2 · Technical Analysis</h4>
+              <p class="small">
+                Class 04 ✓ &nbsp; Class 05 ✓ &nbsp; Class 06 upcoming
+              </p>
+            </div>
+            <div class="vline"></div>
+            <div class="card" style="border-left: 4px solid var(--gold)">
+              <h4>Class 06 · Support &amp; Resistance</h4>
+              <p class="small">
+                Scheduled Saturday · Materials locked until completion
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Progress signals</h3>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">1</div>
+          <h4>Resource activity</h4>
+          <p>
+            Track when an available document or link is opened and completed.
+          </p>
+        </div>
+        <div class="card">
+          <div class="icon">▶</div>
+          <h4>Video progress</h4>
+          <p>
+            Save last position and completion percentage for convenient
+            resuming.
+          </p>
+        </div>
+        <div class="card">
+          <div class="icon">%</div>
+          <h4>Course progress</h4>
+          <p>
+            Roll activity up to class, module, and overall course percentages.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Important:</strong> progress belongs to the individual student.
+        A student cannot view or change another learner's activity, and progress
+        does not unlock future class content.
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Public presence</span
+        ><span class="page-no">08</span>
+      </div>
+      <h2>The institution website</h2>
+      <p class="lead">
+        The public website explains the institution's value, presents programs
+        clearly, builds confidence, captures enquiries, and directs existing
+        learners to the portal.
+      </p>
+
+      <div class="grid-3">
+        <div class="card accent">
+          <h4>Home</h4>
+          <p>
+            Core proposition, featured programs, upcoming batches, and primary
+            calls to action.
+          </p>
+        </div>
+        <div class="card accent">
+          <h4>About</h4>
+          <p>Institution story, teaching approach, credibility, and values.</p>
+        </div>
+        <div class="card accent">
+          <h4>Courses</h4>
+          <p>
+            Program outcomes, topics, duration, audience, and batch information.
+          </p>
+        </div>
+        <div class="card accent">
+          <h4>Faculty</h4>
+          <p>
+            Trainer profiles, experience, specialisms, and teaching
+            responsibilities.
+          </p>
+        </div>
+        <div class="card accent">
+          <h4>Proof &amp; Help</h4>
+          <p>
+            Testimonials, frequently asked questions, policies, and contact
+            details.
+          </p>
+        </div>
+        <div class="card accent">
+          <h4>Enquiry</h4>
+          <p>
+            Lead-capture form, course interest, contact preference, and admin
+            alert.
+          </p>
+        </div>
+      </div>
+
+      <h3>Editable without a developer</h3>
+      <p>
+        Authorized website editors should be able to update banners, page
+        sections, course descriptions, trainer profiles, testimonials, FAQs,
+        contact details, upcoming batches, and announcements.
+      </p>
+
+      <div class="diagram">
+        <div class="diagram-title">Visitor-to-student journey</div>
+        <div class="flow">
+          <div class="step">
+            <span class="n">1</span>
+            <h4>Discover</h4>
+            <p>Visitor understands programs and outcomes.</p>
+          </div>
+          <div class="step">
+            <span class="n">2</span>
+            <h4>Enquire</h4>
+            <p>Lead details reach the institution.</p>
+          </div>
+          <div class="step">
+            <span class="n">3</span>
+            <h4>Register</h4>
+            <p>Staff creates or confirms student account.</p>
+          </div>
+          <div class="step">
+            <span class="n">4</span>
+            <h4>Enrol</h4>
+            <p>Student receives access to the right batch.</p>
+          </div>
+          <div class="step release">
+            <span class="n">5</span>
+            <h4>Learn</h4>
+            <p>Classes, resources, recordings, progress.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Scope</span><span class="page-no">09</span>
+      </div>
+      <h2>Recommended first release</h2>
+      <p class="lead">
+        The MVP focuses on the complete academic journey—from staff setup and
+        batch creation through secure post-class material access.
+      </p>
+
+      <div class="checklist">
+        <div class="check">Authentication and password reset</div>
+        <div class="check">Staff roles and granular permissions</div>
+        <div class="check">Student profiles and account status</div>
+        <div class="check">Course and batch management</div>
+        <div class="check">Registration and batch enrolment</div>
+        <div class="check">Syllabus templates and modules</div>
+        <div class="check">Batch-specific class schedules</div>
+        <div class="check">Documents, links, and video records</div>
+        <div class="check">Manual post-class material release</div>
+        <div class="check">Student dashboard and learning view</div>
+        <div class="check">Video resume and basic progress</div>
+        <div class="check">Announcements and notifications</div>
+        <div class="check">Public institution website</div>
+        <div class="check">Basic content-management screens</div>
+        <div class="check">Reports, exports, and audit trail</div>
+        <div class="check">Responsive mobile and desktop design</div>
+      </div>
+
+      <h3>Recommended after the core is stable</h3>
+      <div class="grid-2 scope-out">
+        <div class="card">
+          <ul>
+            <li>Online payments and invoices</li>
+            <li>Attendance management</li>
+            <li>Assignments and grading</li>
+            <li>Quizzes and assessments</li>
+            <li>Certificates</li>
+          </ul>
+        </div>
+        <div class="card">
+          <ul>
+            <li>Live-class provider integration</li>
+            <li>WhatsApp and SMS alerts</li>
+            <li>Discussion forums</li>
+            <li>Native mobile apps</li>
+            <li>Advanced analytics and CRM integration</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Scope principle:</strong> launch the reliable
+        learning-and-release workflow first. Add commercial, communication, and
+        assessment modules in measured phases.
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Delivery roadmap</span
+        ><span class="page-no">10</span>
+      </div>
+      <h2>Build in controlled phases</h2>
+      <p class="lead">
+        Each phase produces a reviewable part of the solution and reduces risk
+        before the next layer is added.
+      </p>
+
+      <div class="roadmap">
+        <div class="phase">
+          <div class="phase-no">Phase 01</div>
+          <h4>Discovery &amp; UX</h4>
+          <p>
+            Rules, permissions, journeys, wireframes, architecture, and video
+            strategy.
+          </p>
+        </div>
+        <div class="phase">
+          <div class="phase-no">Phase 02</div>
+          <h4>Foundation</h4>
+          <p>Authentication, users, roles, settings, and audit logging.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-no">Phase 03</div>
+          <h4>Academics</h4>
+          <p>
+            Students, courses, batches, enrolments, syllabuses, and schedules.
+          </p>
+        </div>
+        <div class="phase">
+          <div class="phase-no">Phase 04</div>
+          <h4>Content</h4>
+          <p>
+            Materials, videos, approval, locking, release, and notifications.
+          </p>
+        </div>
+        <div class="phase">
+          <div class="phase-no">Phase 05</div>
+          <h4>Student Portal</h4>
+          <p>Dashboard, protected learning view, playback, and progress.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-no">Phase 06</div>
+          <h4>Public Website</h4>
+          <p>
+            Institution pages, courses, faculty, batches, CMS, and enquiries.
+          </p>
+        </div>
+        <div class="phase">
+          <div class="phase-no">Phase 07</div>
+          <h4>QA &amp; Launch</h4>
+          <p>
+            Security, permissions, responsiveness, backups, training, and
+            deployment.
+          </p>
+        </div>
+        <div class="phase">
+          <div class="phase-no">Ongoing</div>
+          <h4>Improve</h4>
+          <p>
+            Usage feedback, enhancements, integrations, and advanced reporting.
+          </p>
+        </div>
+      </div>
+
+      <h3>Quality gates before launch</h3>
+      <div class="grid-3">
+        <div class="card accent">
+          <h4>Access test</h4>
+          <p>
+            No student can access future content or another student's
+            information.
+          </p>
+        </div>
+        <div class="card accent">
+          <h4>Workflow test</h4>
+          <p>
+            Class completion, approval, release, notification, and audit operate
+            end to end.
+          </p>
+        </div>
+        <div class="card accent">
+          <h4>Recovery test</h4>
+          <p>Database and material backups can be restored successfully.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Estimation note:</strong> calendar and cost estimates should be
+        prepared after the discovery decisions are confirmed, especially video
+        hosting, approval rules, payments, and expected student volume.
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Technology &amp; security</span
+        ><span class="page-no">11</span>
+      </div>
+      <h2>A practical, maintainable foundation</h2>
+      <p class="lead">
+        For the current MAMP environment, a Laravel and MySQL application is a
+        natural fit. A unified web application keeps the initial build and
+        deployment straightforward.
+      </p>
+
+      <div class="grid-2">
+        <div class="card accent">
+          <h3>Recommended application</h3>
+          <ul>
+            <li>Laravel backend</li>
+            <li>MySQL database</li>
+            <li>Blade and Livewire interface</li>
+            <li>Responsive component system</li>
+            <li>Queued email notifications</li>
+            <li>CSV/Excel reporting exports</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>Protected content</h3>
+          <ul>
+            <li>Private object or video storage</li>
+            <li>Short-lived signed access URLs</li>
+            <li>File type and size validation</li>
+            <li>Active-enrolment validation</li>
+            <li>Streaming preferred for large videos</li>
+            <li>Defined backup and retention policy</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Security baseline</h3>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Identity</h4>
+          <p>
+            Secure passwords, reset flow, session protection, login throttling,
+            and optional admin 2FA.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Authorization</h4>
+          <p>
+            Server-side roles, ownership checks, active enrolment checks, and
+            protected downloads.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Operations</h4>
+          <p>
+            Error monitoring, audit logs, backups, restoration tests, and
+            production health checks.
+          </p>
+        </div>
+      </div>
+
+      <h3>Core information groups</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Identity</th>
+            <th>Academics</th>
+            <th>Learning</th>
+            <th>Communication</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Users<br />Roles<br />Permissions<br />Profiles</td>
+            <td>
+              Courses<br />Batches<br />Enrolments<br />Syllabuses<br />Classes
+            </td>
+            <td>
+              Materials<br />Video assets<br />Resource progress<br />Video
+              progress
+            </td>
+            <td>
+              Announcements<br />Notifications<br />Website pages<br />Enquiries<br />Audit
+              logs
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Video recommendation:</strong> avoid placing large recordings
+        directly on the normal application server. A protected streaming or
+        object-storage service will scale better and provide stronger access
+        control.
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="topbar">
+        <span class="section-label">Client decisions</span
+        ><span class="page-no">12</span>
+      </div>
+      <h2>Decisions needed before estimation</h2>
+      <p class="lead">
+        These items affect workflows, screens, integrations, security, and cost.
+        Confirming them during discovery will make the development estimate
+        dependable.
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <div class="decision">
+            <div class="mark">01</div>
+            <div>
+              <h4>Registration</h4>
+              <p>
+                Will students self-register, or will staff create all accounts?
+              </p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">02</div>
+            <div>
+              <h4>Payments</h4>
+              <p>
+                Does payment status control enrolment and access in the MVP?
+              </p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">03</div>
+            <div>
+              <h4>Release approval</h4>
+              <p>Can instructors release content, or only academic managers?</p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">04</div>
+            <div>
+              <h4>Timing</h4>
+              <p>Is release manual, scheduled, delayed, or a combination?</p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">05</div>
+            <div>
+              <h4>Downloads</h4>
+              <p>Which documents or videos may students download?</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="decision">
+            <div class="mark">06</div>
+            <div>
+              <h4>Video hosting</h4>
+              <p>Which provider will store and stream recordings?</p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">07</div>
+            <div>
+              <h4>Notifications</h4>
+              <p>Email only, or are SMS and WhatsApp needed immediately?</p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">08</div>
+            <div>
+              <h4>Progress</h4>
+              <p>What exactly counts as completion for a class or module?</p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">09</div>
+            <div>
+              <h4>Additional learning</h4>
+              <p>
+                Are attendance, assignments, quizzes, or certificates MVP items?
+              </p>
+            </div>
+          </div>
+          <div class="decision">
+            <div class="mark">10</div>
+            <div>
+              <h4>Scale &amp; branding</h4>
+              <p>
+                Expected users, languages, visual identity, hosting, and backup
+                needs?
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-band">
+        <h3>Immediate next steps</h3>
+        <ol>
+          <li>Review and approve the proposed scope.</li>
+          <li>Resolve the ten decisions above.</li>
+          <li>Prepare the final permission matrix and user journeys.</li>
+          <li>Create interface wireframes for client approval.</li>
+          <li>
+            Finalize architecture, milestones, estimate, and delivery schedule.
+          </li>
+        </ol>
+      </div>
+      <div class="footer-note">
+        Trading Education Platform · Client Concept &amp; Project Plan
+      </div>
+    </section>
+
+    <section
+      class="page"
+      style="
+        background: var(--navy);
+        color: #fff;
+        display: flex;
+        align-items: center;
+      "
+    >
+      <div style="max-width: 165mm">
+        <div class="eyebrow">Proposed outcome</div>
+        <h2 style="color: #fff; font-size: 30pt; margin-top: 5mm">
+          A controlled learning journey—before, during, and after every class.
+        </h2>
+        <p style="font-size: 14pt; color: #cfe0e4; max-width: 145mm">
+          The platform gives the institution operational control while giving
+          students a modern, simple, and trustworthy place to continue learning
+          after each live session.
+        </p>
+        <div
+          style="
+            width: 28mm;
+            height: 1.5mm;
+            background: var(--mint);
+            margin-top: 10mm;
+          "
+        ></div>
+        <p style="margin-top: 10mm; color: #9cb1ba">
+          End of client concept document · August 2026
+        </p>
+      </div>
+    </section>
+  </body>
+</html>

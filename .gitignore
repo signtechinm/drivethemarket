@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Tests
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Generated database client
+generated/
+
+# Logs and operating system files
+*.log
+.DS_Store
+
+# Deployment
+.vercel/
+
+# Private local-development object storage
+.private-storage/

@@ -1,0 +1,57 @@
+name: Trade Tuter CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NODE_ENV: test
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      NEXTAUTH_URL: http://localhost:3000
+      INSTITUTION_TIMEZONE: Asia/Kolkata
+      LOG_LEVEL: info
+      DATABASE_URL: postgresql://trade_tuter:trade_tuter@localhost:5432/trade_tuter
+      AUTH_SECRET: ci-only-secret-with-at-least-thirty-two-characters
+      STORAGE_PROVIDER: local
+      VIDEO_PROVIDER: mock
+      EMAIL_PROVIDER: log
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: trade_tuter
+          POSTGRES_PASSWORD: trade_tuter
+          POSTGRES_DB: trade_tuter
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U trade_tuter"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run db:generate
+      - run: npx prisma validate
+      - run: npm run db:deploy
+      - run: npm run db:seed
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:coverage
+      - run: npm run build

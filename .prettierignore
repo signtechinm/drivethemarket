@@ -1,0 +1,7 @@
+.next
+node_modules
+coverage
+generated
+docs/phase-1/prototype
+*.pdf
+package-lock.json
