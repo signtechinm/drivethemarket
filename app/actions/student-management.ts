@@ -26,6 +26,11 @@ export interface StudentActionState {
   developmentInvitationUrl?: string;
 }
 
+export interface InvitationActionState {
+  success: boolean;
+  message: string;
+}
+
 const optionalText = z
   .string()
   .trim()
@@ -194,6 +199,73 @@ export async function updateStudentProfileAction(formData: FormData) {
   ]);
   revalidatePath(`/admin/students/${profile.id}`);
   revalidatePath("/admin/students");
+}
+
+export async function resendStudentInvitationAction(
+  _state: InvitationActionState,
+  formData: FormData,
+): Promise<InvitationActionState> {
+  const { user: actor } = await requirePermission(permissions.studentsManage);
+  const studentId = z.string().min(1).safeParse(formData.get("studentId"));
+  if (!studentId.success)
+    return { success: false, message: "The student is invalid." };
+
+  const database = getDatabase();
+  const student = await database.studentProfile.findUnique({
+    where: { id: studentId.data },
+    include: { user: true },
+  });
+  if (!student)
+    return { success: false, message: "The student was not found." };
+  if (student.user.status !== "INVITED")
+    return {
+      success: false,
+      message: "Only students awaiting account activation can be invited.",
+    };
+
+  const notification = await database.$transaction(async (transaction) => {
+    await transaction.invitationToken.deleteMany({
+      where: { userId: student.userId, usedAt: null },
+    });
+    await transaction.user.update({
+      where: { id: student.userId },
+      data: { invitedAt: new Date() },
+    });
+    const created = await transaction.notification.create({
+      data: {
+        userId: student.userId,
+        channel: "EMAIL",
+        status: "PENDING",
+        eventKey: "account_invitation",
+        subject: "Welcome to Drive the Market",
+        body: "Your student account is ready. Use your invitation link to set a password.",
+        relatedEntityType: "StudentProfile",
+        relatedEntityId: `${student.id}:resend`,
+      },
+    });
+    await transaction.auditLog.create({
+      data: {
+        actorId: actor.id,
+        action: "student.invitation_resent",
+        entityType: "StudentProfile",
+        entityId: student.id,
+        metadata: { notificationId: created.id },
+      },
+    });
+    return created;
+  });
+
+  const delivery = await deliverPendingEmails(1, {
+    notificationIds: [notification.id],
+  });
+  revalidatePath(`/admin/students/${student.id}`);
+  return delivery.sent === 1
+    ? { success: true, message: `Invitation sent to ${student.user.email}.` }
+    : {
+        success: false,
+        message:
+          "Email delivery failed. The invitation is available in Communications for retry.",
+      };
 }
 
 const enrolmentSchema = z

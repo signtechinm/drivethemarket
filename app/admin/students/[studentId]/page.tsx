@@ -7,6 +7,7 @@ import {
   updateStudentProfileAction,
 } from "@/app/actions/student-management";
 import { EnrolStudentForm } from "@/components/students/enrol-student-form";
+import { ResendInvitationButton } from "@/components/students/resend-invitation-button";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -98,9 +99,14 @@ export default async function StudentDetailPage({
             </span>
           </div>
         </div>
-        <p className="bg-silver-100 rounded-xl px-4 py-2 text-sm font-bold">
-          {student.studentNumber}
-        </p>
+        <div className="flex flex-col items-end gap-3">
+          <p className="bg-silver-100 rounded-xl px-4 py-2 text-sm font-bold">
+            {student.studentNumber}
+          </p>
+          {student.user.status === "INVITED" ? (
+            <ResendInvitationButton studentId={student.id} />
+          ) : null}
+        </div>
       </div>
       <div className="mt-8 grid gap-6 xl:grid-cols-[1fr_380px]">
         <div className="space-y-5">

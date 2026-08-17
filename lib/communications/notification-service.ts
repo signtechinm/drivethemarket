@@ -84,7 +84,11 @@ export async function queueNotifications(input: QueueNotificationInput) {
 
 export async function deliverPendingEmails(
   limit = 50,
-  filters?: { userIds?: string[]; eventKeys?: NotificationEventKey[] },
+  filters?: {
+    notificationIds?: string[];
+    userIds?: string[];
+    eventKeys?: NotificationEventKey[];
+  },
 ) {
   const database = getDatabase();
   const pending = await database.notification.findMany({
@@ -92,6 +96,9 @@ export async function deliverPendingEmails(
       channel: "EMAIL",
       status: { in: ["PENDING", "FAILED"] },
       attemptCount: { lt: 5 },
+      ...(filters?.notificationIds?.length
+        ? { id: { in: filters.notificationIds } }
+        : {}),
       ...(filters?.userIds?.length ? { userId: { in: filters.userIds } } : {}),
       ...(filters?.eventKeys?.length
         ? { eventKey: { in: filters.eventKeys } }
