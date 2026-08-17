@@ -5,6 +5,7 @@
   "description": "Drive the Market trading education and learning-management platform",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "prisma generate",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
