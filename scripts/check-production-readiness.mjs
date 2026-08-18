@@ -6,10 +6,6 @@ const required = [
   "STORAGE_PROVIDER",
   "VIDEO_PROVIDER",
   "EMAIL_PROVIDER",
-  "S3_REGION",
-  "S3_BUCKET",
-  "S3_ACCESS_KEY_ID",
-  "S3_SECRET_ACCESS_KEY",
   "MONITORING_WEBHOOK_URL",
   "CRON_SECRET",
 ];
@@ -41,8 +37,22 @@ if (
   );
 if (process.env.DATABASE_URL?.includes("change-me"))
   errors.push("DATABASE_URL still contains a placeholder password");
-if (process.env.STORAGE_PROVIDER !== "s3")
-  errors.push("STORAGE_PROVIDER must be s3 for production");
+if (!["s3", "blob"].includes(process.env.STORAGE_PROVIDER))
+  errors.push("STORAGE_PROVIDER must be s3 or blob for production");
+if (process.env.STORAGE_PROVIDER === "s3") {
+  for (const key of [
+    "S3_REGION",
+    "S3_BUCKET",
+    "S3_ACCESS_KEY_ID",
+    "S3_SECRET_ACCESS_KEY",
+  ])
+    if (!process.env[key]) errors.push(`${key} is missing`);
+}
+if (
+  process.env.STORAGE_PROVIDER === "blob" &&
+  !process.env.BLOB_READ_WRITE_TOKEN
+)
+  errors.push("BLOB_READ_WRITE_TOKEN is missing");
 if (process.env.VIDEO_PROVIDER !== "streaming")
   errors.push("VIDEO_PROVIDER must be streaming for production");
 if (!["transactional", "gmail"].includes(process.env.EMAIL_PROVIDER))

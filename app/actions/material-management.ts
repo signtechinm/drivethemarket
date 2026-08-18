@@ -8,6 +8,7 @@ import { requireAnyPermission, requirePermission } from "@/lib/auth/session";
 import { canReleaseMaterial } from "@/lib/materials/release-policy";
 import { getDatabase } from "@/lib/db/client";
 import {
+  inspectPrivateBlob,
   removePrivateMaterial,
   storePrivateMaterial,
   validateMaterialUpload,
@@ -90,9 +91,15 @@ export async function createMaterialAction(
 
   const fileValue = formData.get("file");
   const file = fileValue instanceof File && fileValue.size ? fileValue : null;
+  const blobPathnameValue = formData.get("blobPathname");
+  const blobPathname =
+    typeof blobPathnameValue === "string" && blobPathnameValue
+      ? blobPathnameValue
+      : null;
+  const usesBlob = getServerEnvironment().STORAGE_PROVIDER === "blob";
   if (parsed.data.type === "EXTERNAL_LINK" && !parsed.data.externalUrl)
     return { success: false, message: "Enter the external resource URL." };
-  if (parsed.data.type !== "EXTERNAL_LINK" && !file)
+  if (parsed.data.type !== "EXTERNAL_LINK" && !(usesBlob ? blobPathname : file))
     return { success: false, message: "Select a private file to upload." };
   if (file) {
     const validationError = validateMaterialUpload(file);
@@ -104,6 +111,33 @@ export async function createMaterialAction(
       };
   }
 
+  let blobMetadata: { size: number; type: string } | null = null;
+  if (usesBlob && blobPathname) {
+    try {
+      blobMetadata = await inspectPrivateBlob(blobPathname);
+    } catch {
+      return {
+        success: false,
+        message: "The private Blob upload was not found.",
+      };
+    }
+    const validationError = validateMaterialUpload(blobMetadata);
+    if (validationError) {
+      await removePrivateMaterial(blobPathname);
+      return { success: false, message: validationError };
+    }
+    if (
+      parsed.data.type === "VIDEO" &&
+      !blobMetadata.type.startsWith("video/")
+    ) {
+      await removePrivateMaterial(blobPathname);
+      return {
+        success: false,
+        message: "Video materials require a video file.",
+      };
+    }
+  }
+
   const database = getDatabase();
   const position =
     (
@@ -112,7 +146,13 @@ export async function createMaterialAction(
         _max: { position: true },
       })
     )._max.position ?? 0;
-  const storageKey = file ? await storePrivateMaterial(file) : null;
+  const storageKey = usesBlob
+    ? blobPathname
+    : file
+      ? await storePrivateMaterial(file)
+      : null;
+  const mimeType = blobMetadata?.type ?? file?.type ?? null;
+  const sizeBytes = blobMetadata?.size ?? file?.size ?? null;
   try {
     await database.$transaction(async (transaction) => {
       const material = await transaction.material.create({
@@ -127,8 +167,8 @@ export async function createMaterialAction(
           downloadAllowed: parsed.data.downloadAllowed,
           storageKey,
           externalUrl: parsed.data.externalUrl || null,
-          mimeType: file?.type || null,
-          sizeBytes: file ? BigInt(file.size) : null,
+          mimeType,
+          sizeBytes: sizeBytes === null ? null : BigInt(sizeBytes),
           videoAsset:
             parsed.data.type === "VIDEO" && storageKey
               ? {

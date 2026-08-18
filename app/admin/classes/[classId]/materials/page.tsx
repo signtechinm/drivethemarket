@@ -26,6 +26,7 @@ import { permissions } from "@/lib/auth/constants";
 import { hasPermission } from "@/lib/auth/policy";
 import { requireAnyPermission } from "@/lib/auth/session";
 import { getDatabase } from "@/lib/db/client";
+import { getServerEnvironment } from "@/lib/env/server";
 
 interface ClassMaterialsPageProps {
   params: Promise<{ classId: string }>;
@@ -248,7 +249,10 @@ export default async function ClassMaterialsPage({
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <CreateMaterialForm classId={classSession.id} />
+                <CreateMaterialForm
+                  classId={classSession.id}
+                  storageProvider={getServerEnvironment().STORAGE_PROVIDER}
+                />
               </CardContent>
             </Card>
           </aside>

@@ -37,4 +37,21 @@ describe("server environment", () => {
     });
     expect(environment.EMAIL_PROVIDER).toBe("gmail");
   });
+
+  it("requires a token for private Vercel Blob storage", () => {
+    expect(() =>
+      parseServerEnvironment({
+        ...validEnvironment,
+        STORAGE_PROVIDER: "blob",
+      }),
+    ).toThrow("BLOB_READ_WRITE_TOKEN");
+
+    expect(
+      parseServerEnvironment({
+        ...validEnvironment,
+        STORAGE_PROVIDER: "blob",
+        BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_test_token",
+      }).STORAGE_PROVIDER,
+    ).toBe("blob");
+  });
 });
