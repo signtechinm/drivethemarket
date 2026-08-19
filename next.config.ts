@@ -13,7 +13,7 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
   "media-src 'self' blob:",
-  "connect-src 'self' https://*.blob.vercel-storage.com",
+  "connect-src 'self' https://*.blob.vercel-storage.com https://vercel.com",
   ...(process.env.NODE_ENV === "production"
     ? ["upgrade-insecure-requests"]
     : []),

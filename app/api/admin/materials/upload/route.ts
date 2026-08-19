@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/options";
 import { permissions } from "@/lib/auth/constants";
 import { getDatabase } from "@/lib/db/client";
+import { getServerEnvironment } from "@/lib/env/server";
 import { allowedMaterialMimeTypes } from "@/lib/storage/private-storage";
 
 const materialTypes = [
@@ -75,6 +76,7 @@ export async function POST(request: Request) {
             payload.type === "VIDEO" ? 250_000_000 : 20_000_000,
           addRandomSuffix: false,
           cacheControlMaxAge: 60,
+          callbackUrl: `${getServerEnvironment().NEXT_PUBLIC_APP_URL}/api/admin/materials/upload`,
         };
       },
     });
