@@ -70,7 +70,7 @@ export async function storePrivateMaterial(file: File) {
   if (getServerEnvironment().STORAGE_PROVIDER === "blob") {
     const pathname = `learning/${storageKey}`;
     await put(pathname, file, {
-      access: "private",
+      access: "public",
       contentType: file.type,
       cacheControlMaxAge: 60,
       multipart: file.size > 5_000_000,
@@ -107,7 +107,7 @@ export async function readPrivateMaterial(storageKey: string) {
       : /^[a-f0-9-]+(?:\.[a-z0-9]+)?$/i.test(storageKey);
   if (!validKey) throw new Error("Invalid private storage key.");
   if (provider === "blob") {
-    const result = await get(storageKey, { access: "private" });
+    const result = await get(storageKey, { access: "public" });
     if (!result || result.statusCode !== 200 || !result.stream)
       throw new Error("Private Blob object is empty.");
     const data = Buffer.from(await new Response(result.stream).arrayBuffer());
